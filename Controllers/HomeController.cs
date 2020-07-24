@@ -25,20 +25,34 @@ namespace Mvc_BO.Controllers
         [HttpPost]
         public IActionResult Create([FromForm] Aluno aluno)
         {
-            
-            if(aluno?.Nome == null || aluno?.Email == null || aluno.Sexo == null)
+            //if (string.IsNullOrEmpty(aluno.Nome))
+            //    ModelState.AddModelError("Nome", "O Nome é obrigatório");
+            //if (string.IsNullOrEmpty(aluno.Sexo))
+            //    ModelState.AddModelError("Nome", "O Sexo é obrigatório");
+            //if (string.IsNullOrEmpty(aluno.Email))
+            //    ModelState.AddModelError("Email", "O Email é obrigatório");
+            //if (aluno.Nascimento <= DateTime.Now.AddYears(-18))
+            //    ModelState.AddModelError("Nascimento", "Data de nascimento inválida.");
+
+            if(!ModelState.IsValid)
             {
-                ViewBag.Erro = "Dados Inválidos";
                 return View();
             }
             else
             {
                 AlunoBLL _aluno = new AlunoBLL();
                 _aluno.IncluirAluno(aluno);
+                return RedirectToAction("Index");
             }
-           
-
-            return RedirectToAction("Index");
+            //if(aluno?.Nome == null || aluno?.Email == null || aluno.Sexo == null)
+            //{
+            //    ViewBag.Erro = "Dados Inválidos";
+            //    return View();
+            //}
+            //else
+            //{
+            
+            //}
         }
 
         public IActionResult Index()
