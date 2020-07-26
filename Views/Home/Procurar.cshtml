@@ -1,0 +1,57 @@
+﻿@model Mvc_BO.Models.Aluno
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dados encontrados</title>
+</head>
+<body>
+
+    <div>
+        <dl class="row">
+            @if (Model == null)
+            {
+                <dd>Nenhuma Informação encontrada com o critério informado</dd>
+            }
+            else
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Nome)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Sexo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Sexo)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Nascimento)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Nascimento)
+                </dd>
+            }
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Index">Retornar a Lista</a>
+    </div>
+</body>
+</html>

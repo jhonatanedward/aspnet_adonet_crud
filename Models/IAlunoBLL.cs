@@ -10,5 +10,6 @@ namespace Mvc_BO.Models
         List<Aluno> GetAlunos();
         void IncluirAluno(Aluno aluno);
         void AtualizarAluno(Aluno aluno);
+        void DeletarAluno(int id);
     }
 }

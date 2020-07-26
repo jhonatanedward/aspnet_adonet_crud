@@ -19,20 +19,19 @@ namespace Mvc_BO.Controllers
             _logger = logger;
             _alunoBll = alunoBll;
         }
-        [HttpPost]
-        public IActionResult Edit(Aluno aluno)
+        //// Get
+        //public IActionResult Delete(int id)
+        //{
+        //    //_alunoBll.DeletarAluno(id);
+        //    //return RedirectToAction("index");
+        //    Aluno aluno = _alunoBll.GetAlunos().Single(a => a.Id == id);
+        //    return View(aluno);
+        //}
+        public IActionResult Index()
         {
-            if (ModelState.IsValid)
-            {
-                _alunoBll.AtualizarAluno(aluno);
-                return RedirectToAction("Index");
-            }
-            return View(aluno);
-        }
-        public IActionResult Edit(int id)
-        {
-            Aluno aluno = _alunoBll.GetAlunos().Where(x => x.Id == id).Single();
-            return View(aluno);
+            List<Aluno> alunos = _alunoBll.GetAlunos();
+
+            return View("Lista", alunos);
         }
         [HttpGet]
         public IActionResult Create()
@@ -51,7 +50,7 @@ namespace Mvc_BO.Controllers
             //if (aluno.Nascimento <= DateTime.Now.AddYears(-18))
             //    ModelState.AddModelError("Nascimento", "Data de nascimento inválida.");
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
@@ -68,15 +67,53 @@ namespace Mvc_BO.Controllers
             //}
             //else
             //{
-            
+
             //}
         }
-
-        public IActionResult Index()
+        public IActionResult Edit(int id)
         {
-            List<Aluno> alunos = _alunoBll.GetAlunos();
+            Aluno aluno = _alunoBll.GetAlunos().Where(x => x.Id == id).Single();
+            return View(aluno);
+        }
+        [HttpPost]
+        public IActionResult Edit([Bind(
+            nameof(Aluno.Id),
+            nameof(Aluno.Sexo),
+            nameof(Aluno.Email),
+            nameof(Aluno.Nascimento))]
+        Aluno aluno)
+        {
+            aluno.Nome = _alunoBll.GetAlunos().Single(a => a.Id == aluno.Id).Nome;
 
-            return View("Lista", alunos);
+            if (ModelState.IsValid)
+            {
+                _alunoBll.AtualizarAluno(aluno);
+                return RedirectToAction("Index");
+            }
+            return View(aluno);
+        }
+        public IActionResult Delete(int id)
+        {
+            _alunoBll.DeletarAluno(id);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Details(int id)
+        {
+            Aluno aluno = _alunoBll.GetAlunos().Single(a => a.Id == id);
+            return View(aluno);
+        }
+        public IActionResult Procurar(string procurarPor, string criterio)
+        {
+            if(procurarPor == "Email")
+            {
+                Aluno aluno = _alunoBll.GetAlunos().SingleOrDefault(a => a.Email == criterio);
+                return View(aluno);
+            }
+            else
+            {
+                Aluno aluno = _alunoBll.GetAlunos().SingleOrDefault(a => a.Nome == criterio);
+                return View(aluno);
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

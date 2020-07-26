@@ -12,6 +12,30 @@ namespace Mvc_BO.Models
 {
     public class AlunoBLL : IAlunoBLL
     {
+        public void DeletarAluno(int id)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var conexaoString = configuration.GetConnectionString("localDbConnection");
+
+            try
+            {
+                using(SqlConnection con = new SqlConnection(conexaoString))
+                {
+                    SqlCommand cmd = new SqlCommand("DeletarAluno", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter paramId = new SqlParameter();
+                    paramId.ParameterName = "@Id";
+                    paramId.Value = id;
+                    cmd.Parameters.Add(paramId);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
         public void AtualizarAluno(Aluno aluno)
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());

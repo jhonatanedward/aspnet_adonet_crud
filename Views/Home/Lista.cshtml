@@ -13,6 +13,37 @@
     <p>
         <a asp-action="Create">Criar novo aluno</a>
     </p>
+    <div>
+        @using (Html.BeginForm("Procurar", "Home", FormMethod.Get))
+        {
+            <b>Procurar por: </b>
+            <div class="form-check form-check-inline">
+                @*<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">*@
+                @Html.RadioButton("procurarPor",
+                                "Nome",
+                                true,
+                                htmlAttributes: new { @class = "form-check-input", @id = "inlineRadio1" })
+                <label class="form-check-label" for="inlineRadio1">Nome</label>
+            </div>
+            <div class="form-check form-check-inline">
+                @*<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">*@
+                @Html.RadioButton("procurarPor",
+                                "Email",
+                                true,
+                                htmlAttributes: new { @class = "form-check-input", @id = "inlineRadio2" })
+                <label class="form-check-label" for="inlineRadio1">Email</label>
+            </div>
+            <div class="form-group">
+                @Html.TextBox("criterio", "", htmlAttributes: new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger btn-sm" value="Pesquisar" />
+            </div>
+            
+        }
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -37,28 +68,34 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Sexo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nascimento)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new {  id=item.Id }) |
-                        @Html.ActionLink("Detalhes", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Deletar", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>
-                </tr>
+                using (@Html.BeginForm("Delete", "Home", new { id = item.Id }))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sexo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nascimento)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
+                            @*@Html.ActionLink("Deletar", "Delete", new { id = item.Id })*@
+                            <input type="submit" value="Deletar"
+                                   onclick="return confirm('Tem certeza que deseja deletar o aluno (@item.Nome?)');" />
+                        </td>
+                    </tr>
+                }
+
             }
         </tbody>
     </table>

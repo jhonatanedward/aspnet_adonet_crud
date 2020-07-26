@@ -7,17 +7,17 @@ namespace Mvc_BO.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required(ErrorMessage="O nome deve ser informado")]
+        [Required(ErrorMessage= "Informe o nome do Cliente")]
         [StringLength(50, MinimumLength=5, ErrorMessage = "O nome deve ter no mínimo 5 caracteres")]
-        [Display(Name = "Informe o nome do Cliente")]
+        [Display(Name = "Nome: ")]
         public string Nome { get; set; }
-        [Required(ErrorMessage = "O sexo deve ser informado")]
-        [Display(Name = "Informe o sexo do Cliente")]
+        [Required(ErrorMessage = "Informe o sexo do Cliente ")]
+        [Display(Name = "Sexo")]
         public string Sexo { get; set; }
-        [Required(ErrorMessage = "Email deve ser informado")]
+        [Required(ErrorMessage = "Email: ")]
         [EmailAddress(ErrorMessage = "Email inválido !")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "A data de nascimento deve ser informada")]
+        [Required(ErrorMessage = "Nascimento")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Nascimento { get; set; }
