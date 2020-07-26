@@ -19,14 +19,6 @@ namespace Mvc_BO.Controllers
             _logger = logger;
             _alunoBll = alunoBll;
         }
-        //// Get
-        //public IActionResult Delete(int id)
-        //{
-        //    //_alunoBll.DeletarAluno(id);
-        //    //return RedirectToAction("index");
-        //    Aluno aluno = _alunoBll.GetAlunos().Single(a => a.Id == id);
-        //    return View(aluno);
-        //}
         public IActionResult Index()
         {
             List<Aluno> alunos = _alunoBll.GetAlunos();
@@ -42,15 +34,6 @@ namespace Mvc_BO.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([FromForm] Aluno aluno)
         {
-            //if (string.IsNullOrEmpty(aluno.Nome))
-            //    ModelState.AddModelError("Nome", "O Nome é obrigatório");
-            //if (string.IsNullOrEmpty(aluno.Sexo))
-            //    ModelState.AddModelError("Nome", "O Sexo é obrigatório");
-            //if (string.IsNullOrEmpty(aluno.Email))
-            //    ModelState.AddModelError("Email", "O Email é obrigatório");
-            //if (aluno.Nascimento <= DateTime.Now.AddYears(-18))
-            //    ModelState.AddModelError("Nascimento", "Data de nascimento inválida.");
-
             if (!ModelState.IsValid)
             {
                 return View();
@@ -61,15 +44,6 @@ namespace Mvc_BO.Controllers
                 _alunoBll.IncluirAluno(aluno);
                 return RedirectToAction("Index");
             }
-            //if(aluno?.Nome == null || aluno?.Email == null || aluno.Sexo == null)
-            //{
-            //    ViewBag.Erro = "Dados Inválidos";
-            //    return View();
-            //}
-            //else
-            //{
-
-            //}
         }
         public IActionResult Edit(int id)
         {
@@ -81,11 +55,12 @@ namespace Mvc_BO.Controllers
             nameof(Aluno.Id),
             nameof(Aluno.Sexo),
             nameof(Aluno.Email),
-            nameof(Aluno.Nascimento))]
+            nameof(Aluno.Nascimento),
+            nameof(Aluno.Nome),
+            nameof(Aluno.Foto),
+            nameof(Aluno.Texto))]
         Aluno aluno)
         {
-            aluno.Nome = _alunoBll.GetAlunos().Single(a => a.Id == aluno.Id).Nome;
-
             if (ModelState.IsValid)
             {
                 _alunoBll.AtualizarAluno(aluno);
