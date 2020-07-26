@@ -21,5 +21,7 @@ namespace Mvc_BO.Models
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Nascimento { get; set; }
+        public string Foto { get; set; }
+        public string Texto { get; set; }
     }
 }

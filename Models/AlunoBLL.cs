@@ -72,6 +72,16 @@ namespace Mvc_BO.Models
                     paramDataInscricao.Value = aluno.Nascimento;
                     cmd.Parameters.Add(paramDataInscricao);
 
+                    SqlParameter paramFoto = new SqlParameter();
+                    paramFoto.ParameterName = "@Foto";
+                    paramFoto.Value = aluno.Foto;
+                    cmd.Parameters.Add(paramFoto);
+
+                    SqlParameter paramTexto = new SqlParameter();
+                    paramTexto.ParameterName = "@Texto";
+                    paramTexto.Value = aluno.Texto;
+                    cmd.Parameters.Add(paramTexto);
+
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -102,9 +112,11 @@ namespace Mvc_BO.Models
                         Aluno aluno = new Aluno();
                         aluno.Id = Convert.ToInt32(rdr["Id"]);
                         aluno.Nome = rdr["Nome"].ToString();
-                        aluno.Email = rdr["Email"].ToString();
                         aluno.Sexo = rdr["Sexo"].ToString();
+                        aluno.Email = rdr["Email"].ToString();
                         aluno.Nascimento = Convert.ToDateTime(rdr["Nascimento"]);
+                        aluno.Foto = rdr["Foto"].ToString();
+                        aluno.Texto = rdr["Texto"].ToString();
                         alunos.Add(aluno);
                     }
                     return alunos;
@@ -114,7 +126,6 @@ namespace Mvc_BO.Models
                 throw;
             }
         }
-
         public void IncluirAluno(Aluno aluno)
         {
             var configuration = ConfigurationHelper.GetConfiguration(Environment.CurrentDirectory);
@@ -152,10 +163,20 @@ namespace Mvc_BO.Models
                     paramNascimento.Value = aluno.Nascimento;
                     cmd.Parameters.Add(paramNascimento);
 
+                    SqlParameter paramFoto = new SqlParameter();
+                    paramFoto.ParameterName = "@Foto";
+                    paramFoto.Value = aluno.Foto;
+                    cmd.Parameters.Add(paramFoto);
+
+                    SqlParameter paramTexto = new SqlParameter();
+                    paramTexto.ParameterName = "@Texto";
+                    paramTexto.Value = aluno.Texto;
+                    cmd.Parameters.Add(paramTexto);
+
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
-            }catch(Exception e)
+            }catch
             {
                 throw;
             }

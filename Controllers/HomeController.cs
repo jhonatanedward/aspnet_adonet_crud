@@ -39,6 +39,7 @@ namespace Mvc_BO.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create([FromForm] Aluno aluno)
         {
             //if (string.IsNullOrEmpty(aluno.Nome))
@@ -115,7 +116,6 @@ namespace Mvc_BO.Controllers
                 return View(aluno);
             }
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
