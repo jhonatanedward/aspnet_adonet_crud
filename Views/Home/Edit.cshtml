@@ -5,22 +5,16 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>Edit</title>
 </head>
 <body>
 
-    <h4>Aluno</h4>
+    <h4>Editar Aluno</h4>
     <hr />
-    @if(ViewBag.Erro != null)
-    {
-        <div class="alert alert-danger">
-            @ViewBag.Erro
-        </div>
-    }
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="All" class="text-danger"></div>
+            <form asp-action="Edit">
+                <div asp-validation-summary="None" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Nome" class="control-label"></label>
                     <input asp-for="Nome" class="form-control" />
@@ -28,10 +22,11 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Sexo" class="control-label"></label>
-                    @Html.DropDownList("Sexo", new List<SelectListItem>
+                    @*<input asp-for="Sexo" class="form-control" />*@
+                    @Html.DropDownList("Sexo", selectList: new List<SelectListItem>
                     {
-                        new SelectListItem{Text = "Masculino", Value = "Masculino" },
-                        new SelectListItem{Text = "Feminino", Value = "Feminino" },
+                        new SelectListItem("Masculino", "Masculino"),
+                        new SelectListItem("Feminino", "Feminino")
                     }, "Selecione o Sexo", htmlAttributes: new { @class = "form-control" })
                     <span asp-validation-for="Sexo" class="text-danger"></span>
                 </div>
@@ -46,7 +41,7 @@
                     <span asp-validation-for="Nascimento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Salvar Alteração" class="btn btn-primary" />
                 </div>
             </form>
         </div>

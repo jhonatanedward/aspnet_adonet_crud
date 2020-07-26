@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mvc_BO.Models;
 
 namespace Mvc_BO
 {
@@ -24,6 +25,7 @@ namespace Mvc_BO
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IAlunoBLL, AlunoBLL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

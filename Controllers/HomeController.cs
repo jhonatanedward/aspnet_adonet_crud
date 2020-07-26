@@ -12,10 +12,27 @@ namespace Mvc_BO.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IAlunoBLL _alunoBll;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAlunoBLL alunoBll)
         {
             _logger = logger;
+            _alunoBll = alunoBll;
+        }
+        [HttpPost]
+        public IActionResult Edit(Aluno aluno)
+        {
+            if (ModelState.IsValid)
+            {
+                _alunoBll.AtualizarAluno(aluno);
+                return RedirectToAction("Index");
+            }
+            return View(aluno);
+        }
+        public IActionResult Edit(int id)
+        {
+            Aluno aluno = _alunoBll.GetAlunos().Where(x => x.Id == id).Single();
+            return View(aluno);
         }
         [HttpGet]
         public IActionResult Create()
@@ -41,7 +58,7 @@ namespace Mvc_BO.Controllers
             else
             {
                 AlunoBLL _aluno = new AlunoBLL();
-                _aluno.IncluirAluno(aluno);
+                _alunoBll.IncluirAluno(aluno);
                 return RedirectToAction("Index");
             }
             //if(aluno?.Nome == null || aluno?.Email == null || aluno.Sexo == null)
@@ -57,16 +74,9 @@ namespace Mvc_BO.Controllers
 
         public IActionResult Index()
         {
-            AlunoBLL _aluno = new AlunoBLL();
-
-            List<Aluno> alunos = _aluno.GetAlunos();
+            List<Aluno> alunos = _alunoBll.GetAlunos();
 
             return View("Lista", alunos);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
